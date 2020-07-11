@@ -8,6 +8,7 @@ use App\Jawaban;
 use App\Pertanyaan;
 use App\Tag;
 use App\User;
+use DB;
 
 class JawabanController extends Controller
 {
@@ -16,11 +17,7 @@ class JawabanController extends Controller
         // dd($id);
         $getJawaban = Jawaban::where('pertanyaan_id',$id)->get();
         $getPertanyaan = Pertanyaan::find($id);
-
-
         $name = $getPertanyaan->user->name;
-        // $name = $getJawaban->user->name;
-        // dd($getname);
 
         return view('jawabanpertanyaan',compact('getJawaban','getPertanyaan','name'));
     }

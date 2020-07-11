@@ -91,8 +91,9 @@
                   <?php $color = "info" ?>
               @endif
               <div class="callout callout-{{$color}}">
-                
-                <h5><i class="fas fa-user"></i> {{ $jawaban['user_id'] }}</h5>
+                <?php $namejawaban = DB::table('users')->where('id', '=', $jawaban['user_id'])->get();?>
+
+                <h5><i class="fas fa-user"></i> {{ $namejawaban[0]->name }}</h5>
                 {!! $jawaban['isi']!!}
               </div>
 
