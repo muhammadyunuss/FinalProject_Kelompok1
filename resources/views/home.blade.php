@@ -10,11 +10,12 @@
                 <div class="card-body">
                     @if (session('status'))
                         <div class="alert alert-success" role="alert">
-                            {{ session('status') }}
+                            {{ session('status') }}Aktif
                         </div>
                     @endif
 
-                    You are logged in!
+                    <a href="/pertanyaan" class="btn btn-info text-white">Menuju Pertanyaan</a>
+
                 </div>
             </div>
         </div>

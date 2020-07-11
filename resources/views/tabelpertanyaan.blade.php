@@ -44,22 +44,18 @@
                 <div class="card-body">
                   <table id="example1" class="table table-bordered table-striped">
                     <thead>
-                    <tr class="d-flex">
-                      <th class="col-1">No</th>
-                      <th class="col-4">Judul</th>
-                      <th class="col-5">Isi(s)</th>
-                      <th class="col-2">Aksi</th>
+                    <tr>
+                      <th>No</th>
+                      <th>Judul</th>
+                      <th>Aksi</th>
                     </tr>
                     </thead>
                     <tbody>
                         @foreach ($pertanyaan as $key => $row)
-                        <tr class="d-flex">
-                          <td class="col-1">{{ $key + 1 }}</td>
-                          <td class="col-4">{{$row->judul}}</td>
-                          <td class="col-5">
-                                <textarea class="form-control" rows="3" cols="10" id="isi" name="isi" disabled>{{$row->isi}}</textarea>
-                        </td>
-                          <td class="col-2">
+                        <tr>
+                          <td>{{ $key + 1 }}</td>
+                          <td>{{$row->judul}}</td>
+                          <td>
                             <a class="btn btn-sm btn-info" title="Add/Edit Attributes" href="{{ url('jawaban/'.$row->id) }}">Lihat</a>
                             &nbsp;
                             &nbsp;
@@ -77,11 +73,10 @@
                         @endforeach
                     </tbody>
                     <tfoot>
-                        <tr class="d-flex">
-                            <th class="col-1">No</th>
-                            <th class="col-4">Judul</th>
-                            <th class="col-5">Isi(s)</th>
-                            <th class="col-2">Aksi</th>
+                        <tr>
+                            <th>No</th>
+                            <th>Judul</th>
+                            <th>Aksi</th>
                           </tr>
                     </tfoot>
                   </table>
@@ -111,9 +106,6 @@
     $("#example1").DataTable();
   });
 </script>
-@endpush
-
-@push('konfirmdelete')
 <!-- Sweet Alerts -->
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
     <script>

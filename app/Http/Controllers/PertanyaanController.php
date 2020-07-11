@@ -30,6 +30,7 @@ class PertanyaanController extends Controller
         $tagArr = explode(',', $request->tag);
 
         $new_item = Pertanyaan::create([
+            "user_id" => $request["user_id"],
             "judul" => $request["judul"],
             "isi" => $request["isi"],
             "tag" => $request["tag"],

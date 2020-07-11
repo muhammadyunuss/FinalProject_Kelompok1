@@ -18,11 +18,21 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
-Route::get('/pertanyaan', 'PertanyaanController@index');
-Route::get('/pertanyaan/create', 'PertanyaanController@create');
-Route::post('/pertanyaan', 'PertanyaanController@store');
-Route::get('/jawaban/{pertanyaan_id}', 'JawabanController@index');
-Route::post('/jawaban/{pertanyaan_id}', 'JawabanController@store');
-Route::get('/pertanyaan/{id}/edit','PertanyaanController@edit');
-Route::put('/pertanyaan/{id}', 'PertanyaanController@update');
-Route::delete('/pertanyaan/{id}', 'PertanyaanController@destroy');
+
+Route::group( [ 'middleware' => 'auth' ], function()
+{
+    Route::get('/pertanyaan', 'PertanyaanController@index');
+    Route::get('/pertanyaan/create', 'PertanyaanController@create');
+    Route::post('/pertanyaan', 'PertanyaanController@store');
+    Route::get('/jawaban/{pertanyaan_id}', 'JawabanController@index');
+    Route::post('/jawaban/{pertanyaan_id}', 'JawabanController@store');
+    Route::get('/pertanyaan/{id}/edit','PertanyaanController@edit');
+    Route::put('/pertanyaan/{id}', 'PertanyaanController@update');
+    Route::delete('/pertanyaan/{id}', 'PertanyaanController@destroy');
+
+});
+
+Route::group(['prefix' => 'laravel-filemanager', 'middleware' => ['web', 'auth']], function () {
+    \UniSharp\LaravelFilemanager\Lfm::routes();
+});
+

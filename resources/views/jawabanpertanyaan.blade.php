@@ -1,4 +1,7 @@
 @extends('layouts.master')
+@push('script-head')
+<script src="//cdn.tinymce.com/4/tinymce.min.js"></script>
+@endpush
 @section('content')
     <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
@@ -43,7 +46,7 @@
                         <div class="user-block">
                           <img class="img-circle img-bordered-sm" src="{{asset('/adminlte/dist/img/user1-128x128.jpg')}}" alt="user image">
                           <span class="username">
-                            <a href="#">Jonathan Burke Jr.</a>
+                            <a href="#">{{$name}}</a>
                             <a href="#" class="float-right btn-tool"><i class="fas fa-times"></i></a>
                           </span>
                           <span class="description">Shared publicly - {{ $getPertanyaan['created_at'] }}</span>
@@ -51,7 +54,7 @@
                         <!-- /.user-block -->
                         <h5>{{$getPertanyaan['judul']}}</h5>
                         <p>
-                          {{ $getPertanyaan['isi']}}
+                          {!! $getPertanyaan['isi'] !!}
                         </p>
 
                         @foreach($getPertanyaan->tags as $tag)
@@ -69,11 +72,8 @@
                         </p>
 
                         <form action="{{url('jawaban/'.$getPertanyaan['id'])}}" class="form-horizontal" method="POST">@csrf
-                            <div class="input-group input-group-sm mb-0">
-                              <input id="judul" name="judul" class="form-control form-control-sm" placeholder="Judul Jawaban">
-                            </div>
                             <div class="form-group">
-                              <textarea id="isi" name="isi" class="form-control" rows="3" placeholder="Isi Jawaban ....."></textarea>
+                                <textarea name="isi" class="form-control my-editor" placeholder="Enter ..."></textarea>
                             </div>
                             <div style="float: right" class="input-group-append">
                               <button type="submit" class="btn btn-success">Send</button>&nbsp;&nbsp;
@@ -91,8 +91,9 @@
                   <?php $color = "info" ?>
               @endif
               <div class="callout callout-{{$color}}">
-                <h5><i class="fas fa-info"></i> {{ $jawaban['judul']}}</h5>
-                {{ $jawaban['isi']}}
+                
+                <h5><i class="fas fa-user"></i> {{ $jawaban['user_id'] }}</h5>
+                {!! $jawaban['isi']!!}
               </div>
 
               @endforeach
@@ -110,4 +111,42 @@
   </div>
   <!-- /.content-wrapper -->
 @endsection
+@push('scripts')
+<script>
+    var editor_config = {
+      path_absolute : "/",
+      selector: "textarea.my-editor",
+      plugins: [
+        "advlist autolink lists link image charmap print preview hr anchor pagebreak",
+        "searchreplace wordcount visualblocks visualchars code fullscreen",
+        "insertdatetime media nonbreaking save table contextmenu directionality",
+        "emoticons template paste textcolor colorpicker textpattern"
+      ],
+      toolbar: "insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image media",
+      relative_urls: false,
+      file_browser_callback : function(field_name, url, type, win) {
+        var x = window.innerWidth || document.documentElement.clientWidth || document.getElementsByTagName('body')[0].clientWidth;
+        var y = window.innerHeight|| document.documentElement.clientHeight|| document.getElementsByTagName('body')[0].clientHeight;
+
+        var cmsURL = editor_config.path_absolute + 'laravel-filemanager?field_name=' + field_name;
+        if (type == 'image') {
+          cmsURL = cmsURL + "&type=Images";
+        } else {
+          cmsURL = cmsURL + "&type=Files";
+        }
+
+        tinyMCE.activeEditor.windowManager.open({
+          file : cmsURL,
+          title : 'Filemanager',
+          width : x * 0.8,
+          height : y * 0.8,
+          resizable : "yes",
+          close_previous : "no"
+        });
+      }
+    };
+
+    tinymce.init(editor_config);
+  </script>
+@endpush
 
