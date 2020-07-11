@@ -20,7 +20,7 @@ class JawabanController extends Controller
 
         $name = $getPertanyaan->user->name;
         // $name = $getJawaban->user->name;
-        dd($getname);
+        // dd($getname);
 
         return view('jawabanpertanyaan',compact('getJawaban','getPertanyaan','name'));
     }
